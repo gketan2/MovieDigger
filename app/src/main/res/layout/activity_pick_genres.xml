@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_test"
+    tools:context=".SplashActivity">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:chipSpacingHorizontal="20dp"
+        app:chipSpacingVertical="25dp"
+        >
+        <com.google.android.material.chip.Chip
+            android:id="@+id/comedy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comedy"
+            android:layout_centerInParent="true"
+            app:chipBackgroundColor="#dd316b"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/drama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drama"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/romance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Romance"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/thriller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thriller"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/crime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crime"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/horror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Horror"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/scifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sci-Fi"
+            android:layout_centerInParent="true"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:textAppearance="@style/chipTextAppearance"
+            />
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+
+</RelativeLayout>
