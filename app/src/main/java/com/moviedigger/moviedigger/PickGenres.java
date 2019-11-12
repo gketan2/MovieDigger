@@ -29,12 +29,6 @@ public class PickGenres extends AppCompatActivity {
             // check the chips
         }
 
-        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(ChipGroup cg, @IdRes int checkedId){
-                Toast.makeText(PickGenres.this,((Chip)findViewById(checkedId)).getText(),Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void getCheckedFromServer(){}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:id="@+id/result_moviename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textSize="30sp"
+                android:text="Movie Name"/>
+
+            <TextView
+                android:id="@+id/result_movieyear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_below="@+id/result_moviename"
+                android:textSize="20sp"
+                android:text="2000"
+            />
+
+            <TextView
+                android:id="@+id/result_moviegenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result_moviename"
+                android:layout_toEndOf="@+id/result_movieyear"
+                android:layout_marginRight="20dp"
+                android:textSize="20sp"
+                android:text="Action|Comedy"
+            />
+            <TextView
+                android:id="@+id/result_imdblink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result_moviename"
+                android:layout_toEndOf="@+id/result_moviegenre"
+                android:textSize="20sp"
+                android:text="IMDB link"
+                />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <include layout="@layout/signin_background"/>
+    <RelativeLayout
+        android:id="@+id/signup_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_curved">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_username_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:hint="Username"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:fontFamily="@font/ubuntu_font"
+                android:textSize="20sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_password_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Password"
+            android:layout_below="@+id/signup_username_wrapper"
+
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#3480FF"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="@font/ubuntu_font"
+                android:textSize="20sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_cnf_password_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Confirm Password"
+            android:layout_below="@+id/signup_password_wrapper"
+
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#3480FF"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_cnf_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="@font/ubuntu_font"
+                android:textSize="20sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:fontFamily="@font/ubuntu_bold_font"
+            android:textColor="#3480FF"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/signup_cnf_password_wrapper"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/signup_button_bg"
+            />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
