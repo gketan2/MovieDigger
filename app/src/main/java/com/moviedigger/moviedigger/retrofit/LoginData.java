@@ -11,6 +11,8 @@ public class LoginData {
     private String responsecode;
     @SerializedName("responsemessage")
     private String responsemessage;
+    @SerializedName("token")
+    private String token;
 
     public LoginData(String username, String password) {
         this.username = username;
@@ -26,9 +28,11 @@ public class LoginData {
     public String getresponsecode() {
         return responsecode;
     }
-
     public String getresponsemessage() {
         return responsemessage;
+    }
+    public String getToken(){
+        return token;
     }
 
 

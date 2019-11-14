@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -15,9 +17,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.moviedigger.moviedigger.retrofit.ApiInterface;
 import com.moviedigger.moviedigger.retrofit.LoginData;
 
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +30,8 @@ public class SignInActivity extends AppCompatActivity {
     TextInputLayout password_wrapper,username_wrapper;
     TextInputEditText signin_username,signin_password;
     Button signin_button;
+    ImageView signin_icon_image;
+
     ApiInterface apiInterface;
 
     @Override
@@ -44,6 +45,7 @@ public class SignInActivity extends AppCompatActivity {
         signin_username = findViewById(R.id.signin_username);
         signin_password = findViewById(R.id.signin_password);
         signin_button = findViewById(R.id.signin_button);
+        signin_icon_image = findViewById(R.id.signin_icon_image);
 
 
         /////////Setting Layout
@@ -66,12 +68,16 @@ public class SignInActivity extends AppCompatActivity {
         layoutParams2.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
         password_wrapper.setLayoutParams(layoutParams2);
 
-//        RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(500, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        layoutParams3.addRule(RelativeLayout.BELOW,R.id.password_wrapper);
-//        layoutParams3.setMargins(0,100,0,0);
-//        layoutParams3.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
-//
-//        signin_button.setLayoutParams(layoutParams3);
+        //int img_h = signin_icon_image.getHeight();
+        //int img_w = signin_icon_image.getWidth();
+
+        RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,(int)Math.ceil(h*0.2));
+        layoutParams3.setMargins(0,(int)Math.ceil(h*0.025),0,(int)Math.ceil(h*0.025));
+        layoutParams3.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
+        signin_icon_image.setLayoutParams(layoutParams3);
+
+
+
         signin_button.setBackgroundResource(R.drawable.curved_button);
 
         ///// Layout Set<<<--------
@@ -103,14 +109,12 @@ public class SignInActivity extends AppCompatActivity {
 
         Retrofit retrofit = getClient();
         apiInterface = retrofit.create(ApiInterface.class);
-        Call<LoginData> call = apiInterface.signup(ld);
+        Call<LoginData> call = apiInterface.signin(ld);
         call.enqueue(new Callback<LoginData>() {
-
             @Override
             public void onResponse(Call<LoginData> call, Response<LoginData> response) {
 
             }
-
             @Override
             public void onFailure(Call<LoginData> call, Throwable t) {
 
@@ -124,14 +128,9 @@ public class SignInActivity extends AppCompatActivity {
 
     public Retrofit getClient() {
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
                 .build();
 
     }

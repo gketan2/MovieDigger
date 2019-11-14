@@ -7,6 +7,13 @@
     tools:context=".SignInActivity">
 
     <include layout="@layout/signin_background"/>
+    <ImageView
+        android:id="@+id/signup_icon_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon"
+        android:contentDescription="App icon"
+        />
     <RelativeLayout
         android:id="@+id/signup_content"
         android:layout_width="match_parent"
@@ -18,8 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hint="Username"
-
+            android:hint="Create Username"
             >
 
             <com.google.android.material.textfield.TextInputEditText
