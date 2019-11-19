@@ -2,6 +2,9 @@ package com.moviedigger.moviedigger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.annotations.SerializedName;
 import com.moviedigger.moviedigger.retrofit.ApiInterface;
 import com.moviedigger.moviedigger.retrofit.LoginData;
 
@@ -82,6 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void signUp(View v){
+        final Context mContext = this;
 
         if(signup_username.getText() == null || signup_password.getText() == null || signup_cnf_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
@@ -95,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
         if(!checkPassword(password,cnf_password) && !checkUsername(username)){
             return;
         }
-        Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
 
         final LoginData ld = new LoginData(username,password);
 
@@ -106,7 +111,37 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<LoginData> call, Response<LoginData> response) {
+                if(response.body() != null){
 
+                    int responseCode = response.body().getresponsecode();
+                    String responseMessage = response.body().getresponsemessage();
+                    //String token = response.body().getToken();
+                    String user = response.body().getUsername();
+
+                    if(responseCode == Constants.USER_VERIFIED){
+
+                        SharedPreferences sp = getSharedPreferences("authDetails", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        //editor.putString("token", token);
+                        editor.putString("username", user);
+                        editor.apply();
+                        //loadingDots.stopAnimation();
+                        Intent i = new Intent(mContext, SetGenres.class);
+                        startActivity(i);
+                        finish();
+
+
+                    }else if(responseCode  == Constants.USER_EXIST){
+                        Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
+                        //loadingDots.stopAnimation();
+                        signup_password.setText("");
+                        signup_cnf_password.setText("");
+                        signup_username.setText("");
+                    }
+                }else{
+                    Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
+                    //loadingDots.stopAnimation();
+                }
             }
 
             @Override

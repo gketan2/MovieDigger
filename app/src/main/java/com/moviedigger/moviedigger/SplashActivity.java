@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.moviedigger.moviedigger.retrofit.ApiInterface;
+import com.moviedigger.moviedigger.retrofit.ProfileStatus;
 import com.moviedigger.moviedigger.retrofit.TokenAuth;
 
 import retrofit2.Call;
@@ -27,23 +28,31 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         verify_token();
+
+//        Intent i = new Intent(this,RecommendedActivity.class);
+//        startActivity(i);
+//        finish();
     }
 
     private void verify_token(){
         SharedPreferences sp = getSharedPreferences("authDetails", Context.MODE_PRIVATE);
         String username = sp.getString("username",null);
-        String token = sp.getString("token",null);
+        //String token = sp.getString("token",null);
 
-        if(username == null || token == null){
+        if(username == null/* || token == null*/){
             delay();
             Intent i = new Intent(this,SignInActivity.class);
             startActivity(i);
             finish();
         }
         else{
-            tokenAuth(username,token);
+//            delay();
+//            Intent i = new Intent(this,RecommendedActivity.class);
+//            startActivity(i);
+//            finish();
+            //tokenAuth(username,token);
+            profileStatus(username);
         }
     }
 
@@ -59,21 +68,75 @@ public class SplashActivity extends AppCompatActivity {
         call.enqueue(new Callback<TokenAuth>() {
             @Override
             public void onResponse(Call<TokenAuth> call, Response<TokenAuth> response) {
-                int responseCode = response.body().getResponsecode();
-                String responseMessage = response.body().getResponseMessage();
-                if(responseCode == 1){
-                    Intent i = new Intent(mContext,RecommendedActivity.class);
-                    startActivity(i);
-                    finish();
-                }else if(responseCode == 0){
-                    Toast.makeText(mContext,responseMessage,Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(mContext,SignInActivity.class);
-                    startActivity(i);
-                    finish();
+                if(response.body() != null){
+
+                    int responseCode = response.body().getResponsecode();
+                    String responseMessage = response.body().getResponseMessage();
+                    int profileStatus = response.body().getProfileStatus();
+
+                    if(responseCode == Constants.TOKEN_VERIFIED){
+                        if(profileStatus == Constants.PROFILE_COMPLETE){
+                            Intent i = new Intent(mContext,RecommendedActivity.class);
+                            startActivity(i);
+                            finish();
+                        }else if(profileStatus == Constants.PROFILE_RATE_MOVIES){
+                            Intent i = new Intent(mContext,RateMovies.class);
+                            startActivity(i);
+                            finish();
+                        }else if(profileStatus == Constants.PROFILE_NULL){
+                            Intent i = new Intent(mContext,SetGenres.class);
+                            startActivity(i);
+                            finish();
+                        }
+                    }else if(responseCode == Constants.TOKEN_NOT_VERIFIED){
+                        Toast.makeText(mContext,responseMessage,Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(mContext,SignInActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
             }
             @Override
             public void onFailure(Call<TokenAuth> call, Throwable t) {
+                Toast.makeText(getBaseContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void profileStatus(String username){
+
+        final ProfileStatus ps = new ProfileStatus(username);
+        final Context mContext = this;
+
+        Retrofit retrofit = getClient();
+        apiInterface = retrofit.create(ApiInterface.class);
+        Call<ProfileStatus> call = apiInterface.profileSatus(ps);
+        call.enqueue(new Callback<ProfileStatus>() {
+            @Override
+            public void onResponse(Call<ProfileStatus> call, Response<ProfileStatus> response) {
+                if(response.body() != null){
+
+                    //int responseCode = response.body().getResponsecode();
+                    //String responseMessage = response.body().getResponsemessage();
+                    int profileStatus = response.body().getProfilestatus();
+
+                    if(profileStatus == Constants.PROFILE_COMPLETE){
+                        Intent i = new Intent(mContext,RecommendedActivity.class);
+                        startActivity(i);
+                        finish();
+                    }else if(profileStatus == Constants.PROFILE_RATE_MOVIES){
+                        Intent i = new Intent(mContext,RateMovies.class);
+                        startActivity(i);
+                        finish();
+                    }else if(profileStatus == Constants.PROFILE_NULL){
+                        Intent i = new Intent(mContext,SetGenres.class);
+                        startActivity(i);
+                        finish();
+                    }
+
+                }
+            }
+            @Override
+            public void onFailure(Call<ProfileStatus> call, Throwable t) {
                 Toast.makeText(getBaseContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -91,6 +154,12 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void delay(){}
+    private void delay(){
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            //handle
+//        }
+    }
 
 }

@@ -2,16 +2,18 @@ package com.moviedigger.moviedigger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.eyalbira.loadingdots.LoadingDots;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moviedigger.moviedigger.retrofit.ApiInterface;
@@ -31,7 +33,7 @@ public class SignInActivity extends AppCompatActivity {
     TextInputEditText signin_username,signin_password;
     Button signin_button;
     ImageView signin_icon_image;
-
+    LoadingDots loadingDots;
     ApiInterface apiInterface;
 
     @Override
@@ -46,6 +48,8 @@ public class SignInActivity extends AppCompatActivity {
         signin_password = findViewById(R.id.signin_password);
         signin_button = findViewById(R.id.signin_button);
         signin_icon_image = findViewById(R.id.signin_icon_image);
+        loadingDots = findViewById(R.id.signin_loading_dots);
+
 
 
         /////////Setting Layout
@@ -68,9 +72,6 @@ public class SignInActivity extends AppCompatActivity {
         layoutParams2.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
         password_wrapper.setLayoutParams(layoutParams2);
 
-        //int img_h = signin_icon_image.getHeight();
-        //int img_w = signin_icon_image.getWidth();
-
         RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,(int)Math.ceil(h*0.2));
         layoutParams3.setMargins(0,(int)Math.ceil(h*0.025),0,(int)Math.ceil(h*0.025));
         layoutParams3.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
@@ -92,13 +93,16 @@ public class SignInActivity extends AppCompatActivity {
 
     public void signIn(View v){
 
+        final Context mContext = this;
+        loadingDots.startAnimation();
+
         if(signin_username.getText() == null || signin_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String username = signin_username.getText().toString();
-        String password = signin_password.getText().toString();
+        final String username = signin_username.getText().toString();
+        final String password = signin_password.getText().toString();
 
         if(!checkPassword(password) && !checkUsername(username)){
             return;
@@ -113,12 +117,52 @@ public class SignInActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginData>() {
             @Override
             public void onResponse(Call<LoginData> call, Response<LoginData> response) {
+                if(response.body() != null){
 
+                    int responseCode = response.body().getresponsecode();
+                    String responseMessage = response.body().getresponsemessage();
+                    //String token = response.body().getToken();
+                    String user = response.body().getUsername();
+                    int profileStatus = response.body().getProfileStatus();
+
+                    if(responseCode == Constants.USER_VERIFIED){
+
+                        SharedPreferences sp = getSharedPreferences("authDetails", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        //editor.putString("token", token);
+                        editor.putString("username", user);
+                        editor.apply();
+                        loadingDots.stopAnimation();
+
+                        if(profileStatus == Constants.PROFILE_COMPLETE){
+                            Intent i = new Intent(mContext,RecommendedActivity.class);
+                            startActivity(i);
+                            finish();
+                        }else if(profileStatus == Constants.PROFILE_RATE_MOVIES){
+                            Intent i = new Intent(mContext,RateMovies.class);
+                            startActivity(i);
+                            finish();
+                        }else if(profileStatus == Constants.PROFILE_NULL){
+                            Intent i = new Intent(mContext,SetGenres.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                    }else if(responseCode  == Constants.USER_NOT_VERIFIED){
+                        Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
+                        loadingDots.stopAnimation();
+                        signin_password.setText("");
+                    }
+                }else{
+                    Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
+                    loadingDots.stopAnimation();
+                }
             }
             @Override
             public void onFailure(Call<LoginData> call, Throwable t) {
+                loadingDots.stopAnimation();
+                Toast.makeText(mContext,t.getMessage(), Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getBaseContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -134,8 +178,6 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
 
     }
-
-
     public boolean checkUsername(String userString){
         boolean status = true;
         if(userString.length() == 0){

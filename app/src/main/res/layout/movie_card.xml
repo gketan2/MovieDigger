@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    android:elevation="5dp"
+    app:contentPadding="5dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="wrap_content"
+            android:layout_height="120sp"
+            android:contentDescription="movie_poster"
+            android:layout_marginEnd="5dp"
+
+            />
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Movie name"
+            android:layout_toEndOf="@+id/movie_image"
+            android:textSize="30sp"
+            android:fontFamily="@font/ubuntu_font"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:id="@+id/imdb_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Rating"
+            android:layout_toEndOf="@+id/movie_image"
+            android:layout_below="@+id/movie_name"
+            android:textSize="20sp"
+            android:fontFamily="@font/ubuntu_font"
+            android:textColor="#000000"
+            />
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/movie_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imdb_rate"
+            android:layout_toEndOf="@+id/movie_image"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:progressTint="#454749"
+            android:secondaryProgressTint="#454749"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

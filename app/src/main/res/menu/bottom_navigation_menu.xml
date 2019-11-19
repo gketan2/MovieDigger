@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home"
+        android:title="Recommend"
+        android:titleCondensed="-"
+        />
+    <item android:id="@+id/search"
+        android:title="Search"
+        android:titleCondensed="+"
+        android:icon="@drawable/search_icon"
+        />
+    <item android:id="@+id/profile"
+        android:title="Profile"
+        android:titleCondensed="#"
+        android:icon="@drawable/profile_icon"
+        />
+</menu>

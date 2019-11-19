@@ -16,4 +16,11 @@ public interface ApiInterface {
     @POST("token_auth/")
     Call<TokenAuth> tokenAuth(@Body TokenAuth token);
 
+    @POST("profile_status/")
+    Call<ProfileStatus> profileSatus(@Body ProfileStatus status);
+
+
+    @POST("recommend_movies_to_user/")
+    Call<MoviesList> recommendedMovies(@Body MoviesList list);
+
 }

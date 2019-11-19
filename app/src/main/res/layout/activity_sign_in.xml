@@ -79,6 +79,7 @@
             android:onClick="signIn"
             />
         <TextView
+            android:id="@+id/to_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -90,6 +91,27 @@
             android:layout_marginTop="10dp"
             android:onClick="toSignUp"
             />
+
+        <com.eyalbira.loadingdots.LoadingDots
+            android:id="@+id/signin_loading_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/to_sign_up"
+            android:layout_marginTop="20dp"
+
+            app:LoadingDots_auto_play="true"
+
+            app:LoadingDots_dots_color="#3480FF"
+            app:LoadingDots_dots_count="4"
+            app:LoadingDots_dots_size="3dp"
+            app:LoadingDots_dots_space="1dp"
+
+            app:LoadingDots_loop_duration="800"
+            app:LoadingDots_loop_start_delay="100"
+
+            app:LoadingDots_jump_duration="200"
+            app:LoadingDots_jump_height="4dp"/>
 
     </RelativeLayout>
 
