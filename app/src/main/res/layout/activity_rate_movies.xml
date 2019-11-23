@@ -5,14 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2DB9FC"
     tools:context=".RateMovies"
     >
-    <androidx.recyclerview.widget.RecyclerView
+    <TextView
+        android:id="@+id/ratemovies_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:text="Please Rate Atleast 5 Movies"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/ubuntu_bold_font"
         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ratemovies_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/ratemovies_head"
+        android:layout_above="@+id/ratemovies_submit"
+        />
+    <TextView
+        android:id="@+id/ratemovies_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:fontFamily="@font/ubuntu_bold_font"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/gradient"/>
 
 
 </RelativeLayout>

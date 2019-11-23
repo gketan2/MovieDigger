@@ -8,79 +8,42 @@
     tools:context=".SetGenres"
     >
     <TextView
-        android:id="@+id/head"
+        android:id="@+id/setgenres_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Your Favourite Genres"
         android:textSize="25sp"
         android:gravity="center"
         android:fontFamily="@font/ubuntu_bold_font"
+        android:layout_marginBottom="10dp"
         />
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/head"
-        app:cardElevation="5dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="5dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardUseCompatPadding="true"
+        android:layout_below="@+id/setgenres_head"
+        android:layout_above="@+id/setgenres_submit"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         >
-        <GridLayout
-            android:id="@+id/shadow_test"
+        <ListView
+            android:id="@+id/setgenres_list"
             android:layout_width="match_parent"
-            android:padding="5dp"
             android:layout_height="wrap_content"
-            android:columnCount="1"
-            >
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Action"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Adventure"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comedy"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Drama"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Romance"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sci-Fi"
-                android:textSize="20sp"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thriller"
-                android:textSize="20sp"/>
-        </GridLayout>
-    </androidx.cardview.widget.CardView>
+            />
+    </RelativeLayout>
     <TextView
+        android:id="@+id/setgenres_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:textSize="30sp"
         android:text="Submit"
+        android:onClick="registerMovies"
         android:fontFamily="@font/ubuntu_bold_font"
         android:background="@drawable/gradient"
         android:textColor="#ff3b3b"
+        android:layout_marginTop="10dp"
         />
 
 </RelativeLayout>

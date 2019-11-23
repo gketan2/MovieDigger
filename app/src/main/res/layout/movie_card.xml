@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="Movie name"
             android:layout_toEndOf="@+id/movie_image"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:fontFamily="@font/ubuntu_font"
             android:textColor="#000000"
             />
@@ -40,7 +40,18 @@
             android:hint="Rating"
             android:layout_toEndOf="@+id/movie_image"
             android:layout_below="@+id/movie_name"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:fontFamily="@font/ubuntu_font"
+            android:textColor="#000000"
+            />
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Genres"
+            android:layout_toEndOf="@+id/movie_image"
+            android:layout_below="@+id/imdb_rate"
+            android:textSize="15sp"
             android:fontFamily="@font/ubuntu_font"
             android:textColor="#000000"
             />
@@ -48,7 +59,7 @@
             android:id="@+id/movie_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imdb_rate"
+            android:layout_below="@+id/movie_image"
             android:layout_toEndOf="@+id/movie_image"
             android:numStars="5"
             android:stepSize="0.5"

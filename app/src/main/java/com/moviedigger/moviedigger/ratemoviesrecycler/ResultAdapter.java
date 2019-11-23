@@ -1,9 +1,10 @@
-package com.moviedigger.moviedigger.resultrecycler;
+package com.moviedigger.moviedigger.ratemoviesrecycler;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,12 +15,13 @@ import com.moviedigger.moviedigger.tmdbcalls.MoviePoster;
 import com.moviedigger.moviedigger.tmdbcalls.TmdbResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
 
-    private List<ResultData> dataList = new ArrayList<ResultData>();
+    private ArrayList<ResultData> dataList = new ArrayList<ResultData>();
     private Context mContext;
+
+    private ArrayList<Float> userRatingList = new ArrayList<>();
 
     public ResultAdapter(ArrayList<ResultData> list, Context context){
         dataList.clear();
@@ -34,6 +36,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
         ResultViewHolder viewHolder = new ResultViewHolder(v);
 
 
+
+
         for(int i=0;i<dataList.size();i++)
             getDataFromTmdb(i);
 
@@ -44,8 +48,13 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     @Override
     public void onBindViewHolder(final ResultViewHolder viewHolder, final int position){
 
-        viewHolder.ratingBar.setVisibility(View.GONE);
 
+        viewHolder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                dataList.get(position).setUserRating(rating);
+            }
+        });
 
         String rating = dataList.get(position).getImdbRating();
         String url = dataList.get(position).getImageUrl();
@@ -65,8 +74,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
             Glide.clear(viewHolder.movieImage);
             viewHolder.movieImage.setImageDrawable(null);
         }
-
-
 
 
     }
@@ -92,7 +99,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     private void getDataFromTmdb(final int position){
             MoviePoster moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
                 @Override
-                public void processFinish(List<String> output) {
+                public void processFinish(ArrayList<String> output) {
                     if(output != null && output.size() !=0 ){
                         dataList.get(position).setImageUrl(output.get(0));
                         dataList.get(position).setImdbRating(output.get(1));
@@ -100,10 +107,21 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
                         notifyDataSetChanged();
                     }
 
-
                 }
             });
             moviePoster.execute();
+    }
+
+    public ArrayList<Float> getUserRatingList(){
+
+        int size = getItemCount();
+        userRatingList.clear();
+        for(int i = 0; i < size ; i++){
+            float rate = dataList.get(i).getUserRating();
+            userRatingList.add(rate);
+        }
+        return userRatingList;
+
     }
 
 }

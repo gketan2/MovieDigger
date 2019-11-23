@@ -8,9 +8,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.moviedigger.moviedigger.resultrecycler.ResultData;
 import com.moviedigger.moviedigger.retrofit.ApiInterface;
+import com.moviedigger.moviedigger.retrofit.MoviesList;
 import com.moviedigger.moviedigger.retrofit.ProfileStatus;
 import com.moviedigger.moviedigger.retrofit.TokenAuth;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,12 +31,19 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        //test();
 
-        verify_token();
+        //verify_token();
 
 //        Intent i = new Intent(this,RecommendedActivity.class);
 //        startActivity(i);
 //        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        verify_token();
     }
 
     private void verify_token(){
@@ -40,19 +51,22 @@ public class SplashActivity extends AppCompatActivity {
         String username = sp.getString("username",null);
         //String token = sp.getString("token",null);
 
-        if(username == null/* || token == null*/){
-            delay();
+        if(username == null){
+            //delay();
             Intent i = new Intent(this,SignInActivity.class);
             startActivity(i);
             finish();
         }
         else{
+
+
 //            delay();
-//            Intent i = new Intent(this,RecommendedActivity.class);
-//            startActivity(i);
-//            finish();
+            Intent i = new Intent(this,RecommendedActivity.class);
+            startActivity(i);
+            finish();
             //tokenAuth(username,token);
-            profileStatus(username);
+            //
+            //profileStatus(username);
         }
     }
 
@@ -142,6 +156,44 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
+
+    public void test(){
+
+        MoviesList l = new MoviesList("fg");
+        l.setGenre("Action");
+        l.setNum_movies(5);
+        Retrofit retrofit = getClient();
+        apiInterface = retrofit.create(ApiInterface.class);
+        Call<MoviesList> call = apiInterface.getMovieList(l);
+        call.enqueue(new Callback<MoviesList>() {
+            @Override
+            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
+                if(response.body() != null){
+                    int responsecode = response.body().getResponsecode();
+                    String responseMessage = response.body().getResponsemessage();
+                    if(responsecode == Constants.OK){
+                        ArrayList<Integer> id = new ArrayList<Integer>();
+                        id.addAll(response.body().getMovieId());
+                        ArrayList<String> name = new ArrayList<String>();
+                        name.addAll(response.body().getMovieNameList());
+                        System.out.println(id+"\n"+name);
+
+                        ArrayList<ResultData> data = new ArrayList<>();
+
+                        for(int i = 0 ; i < id.size() ; i++){
+                            ResultData rd = new ResultData(name.get(i), id.get(i));
+                            data.add(rd);
+                        }
+                        System.out.println(data);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MoviesList> call, Throwable t) {
+                Toast.makeText(getBaseContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 

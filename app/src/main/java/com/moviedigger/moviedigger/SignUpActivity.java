@@ -114,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if(response.body() != null){
 
                     int responseCode = response.body().getresponsecode();
-                    String responseMessage = response.body().getresponsemessage();
+                    //String responseMessage = response.body().getresponsemessage();
                     //String token = response.body().getToken();
                     String user = response.body().getUsername();
 
@@ -132,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
                     }else if(responseCode  == Constants.USER_EXIST){
-                        Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "User Already Exist!", Toast.LENGTH_SHORT).show();
                         //loadingDots.stopAnimation();
                         signup_password.setText("");
                         signup_cnf_password.setText("");
@@ -177,7 +177,7 @@ public class SignUpActivity extends AppCompatActivity {
         }else if(cnfpassString.length() == 0){
             Toast.makeText(this,"Please Confirm Password",Toast.LENGTH_SHORT).show();
             status = false;
-        }else if(passString.equals(cnfpassString)){
+        }else if(!passString.equals(cnfpassString)){
             Toast.makeText(this,"Enter Same Passwords",Toast.LENGTH_SHORT).show();
             status = false;
         }

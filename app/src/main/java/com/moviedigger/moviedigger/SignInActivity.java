@@ -107,7 +107,7 @@ public class SignInActivity extends AppCompatActivity {
         if(!checkPassword(password) && !checkUsername(username)){
             return;
         }
-        Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
 
         final LoginData ld = new LoginData(username,password);
 
@@ -123,7 +123,7 @@ public class SignInActivity extends AppCompatActivity {
                     String responseMessage = response.body().getresponsemessage();
                     //String token = response.body().getToken();
                     String user = response.body().getUsername();
-                    int profileStatus = response.body().getProfileStatus();
+                    //int profileStatus = response.body().getProfileStatus();
 
                     if(responseCode == Constants.USER_VERIFIED){
 
@@ -134,23 +134,32 @@ public class SignInActivity extends AppCompatActivity {
                         editor.apply();
                         loadingDots.stopAnimation();
 
-                        if(profileStatus == Constants.PROFILE_COMPLETE){
-                            Intent i = new Intent(mContext,RecommendedActivity.class);
+//                        if(profileStatus == Constants.PROFILE_COMPLETE){
+//                            Intent i = new Intent(mContext,RecommendedActivity.class);
+//                            startActivity(i);
+//                            finish();
+//                        }else if(profileStatus == Constants.PROFILE_RATE_MOVIES){
+//                            Intent i = new Intent(mContext,RateMovies.class);
+//                            startActivity(i);
+//                            finish();
+//                        }else if(profileStatus == Constants.PROFILE_NULL){
+//                            Intent i = new Intent(mContext,SetGenres.class);
+//                            startActivity(i);
+//                            finish();
+//                        }
+
+                        Intent i = new Intent(mContext,RecommendedActivity.class);
                             startActivity(i);
                             finish();
-                        }else if(profileStatus == Constants.PROFILE_RATE_MOVIES){
-                            Intent i = new Intent(mContext,RateMovies.class);
-                            startActivity(i);
-                            finish();
-                        }else if(profileStatus == Constants.PROFILE_NULL){
-                            Intent i = new Intent(mContext,SetGenres.class);
-                            startActivity(i);
-                            finish();
-                        }
 
                     }else if(responseCode  == Constants.USER_NOT_VERIFIED){
                         Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
                         loadingDots.stopAnimation();
+                        signin_password.setText("");
+                    }else if(responseCode == Constants.USER_NOT_EXIST){
+                        Toast.makeText(mContext,responseMessage,Toast.LENGTH_SHORT).show();
+                        loadingDots.stopAnimation();
+                        signin_username.setText("");
                         signin_password.setText("");
                     }
                 }else{

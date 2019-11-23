@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SearchFragment">
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:textSize="25sp"
+        android:fontFamily="@font/ubuntu_bold_font"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head"
+        android:layout_margin="5dp"
+        >
+        <EditText
+            android:id="@+id/search_movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Movie Name (Optional)"
+            android:fontFamily="@font/ubuntu_font"
+            />
+        <com.pchmn.materialchips.ChipsInput
+            android:id="@+id/chips_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_movie_name"
+            app:hint="Genres(Optional)"
+            app:chip_hasAvatarIcon="false"
+            app:chip_deletable="true"
+            app:showChipDetailed="false"
+            />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/chips_input"
+            android:background="@drawable/curved_button"
+            android:fontFamily="@font/ubuntu_bold_font"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

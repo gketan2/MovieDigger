@@ -1,8 +1,8 @@
 package com.moviedigger.moviedigger.tmdbcalls;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface TmdbResponse {
 
-    void processFinish(List<String> output);
+    void processFinish(ArrayList<String> output);
 }

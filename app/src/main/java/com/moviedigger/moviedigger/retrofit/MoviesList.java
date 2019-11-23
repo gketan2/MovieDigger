@@ -2,7 +2,7 @@ package com.moviedigger.moviedigger.retrofit;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MoviesList {
 
@@ -12,10 +12,14 @@ public class MoviesList {
     private int responsecode;
     @SerializedName("responsemessage")
     private String responsemessage;
-    @SerializedName("movie_name")
-    private List<String> movieNameList;
-    @SerializedName("movie_id")
-    private List<Integer> movieId;
+    @SerializedName("names")
+    private ArrayList<String> movieNameList;
+    @SerializedName("tmdb_ids")
+    private ArrayList<Integer> movieId;
+    @SerializedName("num_movies")
+    private int num_movies;
+    @SerializedName("genre")
+    private String genre;
 
     public MoviesList(String username) {
         this.username = username;
@@ -29,10 +33,17 @@ public class MoviesList {
     public String getResponsemessage() {
         return responsemessage;
     }
-    public List<String> getMovieNameList() {
+    public ArrayList<String> getMovieNameList() {
         return movieNameList;
     }
-    public List<Integer> getMovieId() {
+    public ArrayList<Integer> getMovieId() {
         return movieId;
+    }
+
+    public void setNum_movies(int num_movies) {
+        this.num_movies = num_movies;
+    }
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

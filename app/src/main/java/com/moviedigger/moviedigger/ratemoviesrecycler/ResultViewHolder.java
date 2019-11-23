@@ -1,4 +1,4 @@
-package com.moviedigger.moviedigger.resultrecycler;
+package com.moviedigger.moviedigger.ratemoviesrecycler;
 
 import android.view.View;
 import android.widget.ImageView;

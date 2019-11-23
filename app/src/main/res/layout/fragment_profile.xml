@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    tools:context=".fragment.ProfileFragment">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:gravity="center"
+        android:fontFamily="@font/ubuntu_bold_font"
+        android:textSize="25sp"/>
+    <Button
+        android:id="@+id/profile_signout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="KETAN"
-        android:textSize="25sp"
+        android:text="signout"
         android:layout_centerInParent="true"/>
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/icon"
-    android:layout_centerInParent="true"/>
 </RelativeLayout>

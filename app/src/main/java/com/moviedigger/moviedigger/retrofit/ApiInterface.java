@@ -19,6 +19,15 @@ public interface ApiInterface {
     @POST("profile_status/")
     Call<ProfileStatus> profileSatus(@Body ProfileStatus status);
 
+    @POST("register_movies/")
+    Call<GenresList> setGenres(@Body GenresList list);
+
+    @POST("register_movies/")
+    Call<MoviesList> rateMovies(@Body MoviesList list);
+
+    @POST("get_popular_movies/")
+    Call<MoviesList> getMovieList(@Body MoviesList list);
+
 
     @POST("recommend_movies_to_user/")
     Call<MoviesList> recommendedMovies(@Body MoviesList list);
