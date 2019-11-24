@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.eyalbira.loadingdots.LoadingDots;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.annotations.SerializedName;
@@ -33,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText signup_username,signup_password,signup_cnf_password;
     Button signup_button;
     ImageView signup_icon_image;
+    LoadingDots signup_loadingdots;
 
     ApiInterface apiInterface;
 
@@ -52,6 +54,8 @@ public class SignUpActivity extends AppCompatActivity {
         signup_cnf_password = findViewById(R.id.signup_cnf_password);
 
         signup_icon_image = findViewById(R.id.signup_icon_image);
+
+        signup_loadingdots = findViewById(R.id.signup_loadingdots);
 
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -87,6 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signUp(View v){
         final Context mContext = this;
+        signup_loadingdots.setVisibility(View.VISIBLE);
 
         if(signup_username.getText() == null || signup_password.getText() == null || signup_cnf_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
@@ -112,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginData> call, Response<LoginData> response) {
                 if(response.body() != null){
-
+                    signup_loadingdots.setVisibility(View.INVISIBLE);
                     int responseCode = response.body().getresponsecode();
                     //String responseMessage = response.body().getresponsemessage();
                     //String token = response.body().getToken();
@@ -125,7 +130,6 @@ public class SignUpActivity extends AppCompatActivity {
                         //editor.putString("token", token);
                         editor.putString("username", user);
                         editor.apply();
-                        //loadingDots.stopAnimation();
                         Intent i = new Intent(mContext, SetGenres.class);
                         startActivity(i);
                         finish();
@@ -133,23 +137,23 @@ public class SignUpActivity extends AppCompatActivity {
 
                     }else if(responseCode  == Constants.USER_EXIST){
                         Toast.makeText(mContext, "User Already Exist!", Toast.LENGTH_SHORT).show();
-                        //loadingDots.stopAnimation();
                         signup_password.setText("");
                         signup_cnf_password.setText("");
                         signup_username.setText("");
                     }
                 }else{
                     Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
-                    //loadingDots.stopAnimation();
+                    signup_loadingdots.setVisibility(View.INVISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<LoginData> call, Throwable t) {
-
                 Toast.makeText(getBaseContext(),t.getMessage(), Toast.LENGTH_SHORT).show();
+                signup_loadingdots.setVisibility(View.INVISIBLE);
             }
         });
+        signup_loadingdots.setVisibility(View.INVISIBLE);
     }
 
     public Retrofit getClient() {

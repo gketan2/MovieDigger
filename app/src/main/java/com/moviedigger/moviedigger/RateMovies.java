@@ -5,9 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moviedigger.moviedigger.ratemoviesrecycler.ResultAdapter;
@@ -29,6 +31,7 @@ import static com.moviedigger.moviedigger.retrofit.ApiInterface.BASE_URL;
 public class RateMovies extends AppCompatActivity {
 
     RecyclerView ratemovies_recyclerview;
+    TextView ratemovies_submit;
 
     ResultAdapter ratemoviesAdapter;
     ApiInterface apiInterface;
@@ -43,12 +46,20 @@ public class RateMovies extends AppCompatActivity {
         setContentView(R.layout.activity_rate_movies);
 
         ratemovies_recyclerview = findViewById(R.id.ratemovies_recyclerview);
+        ratemovies_submit = findViewById(R.id.ratemovies_submit);
 
         ratemoviesAdapter = new ResultAdapter(data,this);
 
         ratemovies_recyclerview.setAdapter(ratemoviesAdapter);
 
         ratemovies_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+        ratemovies_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerMovies();
+            }
+        });
 
     }
 
@@ -58,7 +69,7 @@ public class RateMovies extends AppCompatActivity {
         getMoviesCall();
     }
 
-    public void registerMovies(View v){
+    public void registerMovies(){
 
         ArrayList<Float> list = ratemoviesAdapter.getUserRatingList();
 
@@ -69,7 +80,7 @@ public class RateMovies extends AppCompatActivity {
                     id.add(data.get(i).getMovieId());
                 }
             }
-            SetUserRating userRating = new SetUserRating(ratings,id);
+            setMoviesCall();
         }
 
     }
@@ -123,32 +134,40 @@ public class RateMovies extends AppCompatActivity {
 
     }
 
-//    private void setMoviesCall() {
-//        final Context context = this;
-//        Retrofit retrofit = getClient();
-//        MoviesList moviesList = new MoviesList(context.getSharedPreferences("authDetails", Context.MODE_PRIVATE).getString("username",null));
-//        //moviesList.setGenre("Action");
-//        moviesList.setNum_movies(15);
-//        apiInterface = retrofit.create(ApiInterface.class);
-//        Call<MoviesList> call = apiInterface.getMovieList(moviesList);
-//        System.out.println("--------------------------------making call---------------------------------------");
-//        call.enqueue(new Callback<MoviesList>() {
-//            @Override
-//            public void onResponse(Call<MoviesList> call, Response<MoviesList> response) {
-//                if(response.body() != null){
-//                    int responsecode = response.body().getResponsecode();
-//                    String responsemessage = response.body().getResponsemessage();
-//                    if(responsecode == Constants.OK){
-//
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MoviesList> call, Throwable t) {
-//                Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//    }
+    private void setMoviesCall() {
+
+        final Context context = this;
+        Retrofit retrofit = getClient();
+
+        SetUserRating userRating = new SetUserRating(context.getSharedPreferences("authDetails", Context.MODE_PRIVATE).getString("username",null),ratings,id);
+        apiInterface = retrofit.create(ApiInterface.class);
+
+        Call<SetUserRating> call = apiInterface.rateMovies(userRating);
+        System.out.println("--------------------------------making call---------------------------------------");
+        call.enqueue(new Callback<SetUserRating>() {
+            @Override
+            public void onResponse(Call<SetUserRating> call, Response<SetUserRating> response) {
+                if(response.body() != null){
+                    int responsecode = response.body().getResponsecode();
+                    String responsemessage = response.body().getResponsemessage();
+                    if(responsecode == Constants.OK){
+                        Intent i = new Intent(context,RecommendedActivity.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        Toast.makeText(context, responsemessage, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+
+                    Toast.makeText(context, "Something Went Wrong..", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SetUserRating> call, Throwable t) {
+                Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }

@@ -98,6 +98,26 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/signup_button_bg"
             />
+        <com.eyalbira.loadingdots.LoadingDots
+            android:id="@+id/signup_loadingdots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/signup_button"
+            android:layout_marginTop="20dp"
+
+            app:LoadingDots_auto_play="true"
+
+            app:LoadingDots_dots_color="#3480FF"
+            app:LoadingDots_dots_count="4"
+            app:LoadingDots_dots_size="10dp"
+            app:LoadingDots_dots_space="8dp"
+
+            app:LoadingDots_loop_duration="800"
+            app:LoadingDots_loop_start_delay="50"
+
+            app:LoadingDots_jump_duration="500"
+            app:LoadingDots_jump_height="10dp"/>
 
     </RelativeLayout>
 

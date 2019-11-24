@@ -25,6 +25,26 @@
         android:layout_marginRight="5dp"
         android:layout_below="@+id/head"
         />
+    <com.eyalbira.loadingdots.LoadingDots
+        android:id="@+id/home_loading_dots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+
+        app:LoadingDots_auto_play="true"
+
+        app:LoadingDots_dots_color="#3480FF"
+        app:LoadingDots_dots_count="4"
+        app:LoadingDots_dots_size="10dp"
+        app:LoadingDots_dots_space="8dp"
+
+        app:LoadingDots_loop_duration="800"
+        app:LoadingDots_loop_start_delay="50"
+
+        app:LoadingDots_jump_duration="500"
+        app:LoadingDots_jump_height="10dp"
+        />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_reload"
         android:layout_width="wrap_content"

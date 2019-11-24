@@ -23,7 +23,7 @@ public interface ApiInterface {
     Call<GenresList> setGenres(@Body GenresList list);
 
     @POST("register_movies/")
-    Call<MoviesList> rateMovies(@Body MoviesList list);
+    Call<SetUserRating> rateMovies(@Body SetUserRating list);
 
     @POST("get_popular_movies/")
     Call<MoviesList> getMovieList(@Body MoviesList list);

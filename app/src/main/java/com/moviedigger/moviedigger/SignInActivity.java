@@ -94,7 +94,7 @@ public class SignInActivity extends AppCompatActivity {
     public void signIn(View v){
 
         final Context mContext = this;
-        loadingDots.startAnimation();
+        loadingDots.setVisibility(View.VISIBLE);
 
         if(signin_username.getText() == null || signin_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ public class SignInActivity extends AppCompatActivity {
                         //editor.putString("token", token);
                         editor.putString("username", user);
                         editor.apply();
-                        loadingDots.stopAnimation();
+                        loadingDots.setVisibility(View.INVISIBLE);
 
 //                        if(profileStatus == Constants.PROFILE_COMPLETE){
 //                            Intent i = new Intent(mContext,RecommendedActivity.class);
@@ -154,22 +154,22 @@ public class SignInActivity extends AppCompatActivity {
 
                     }else if(responseCode  == Constants.USER_NOT_VERIFIED){
                         Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
-                        loadingDots.stopAnimation();
+                        loadingDots.setVisibility(View.INVISIBLE);
                         signin_password.setText("");
                     }else if(responseCode == Constants.USER_NOT_EXIST){
                         Toast.makeText(mContext,responseMessage,Toast.LENGTH_SHORT).show();
-                        loadingDots.stopAnimation();
+                        loadingDots.setVisibility(View.INVISIBLE);
                         signin_username.setText("");
                         signin_password.setText("");
                     }
                 }else{
                     Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
-                    loadingDots.stopAnimation();
+                    loadingDots.setVisibility(View.INVISIBLE);
                 }
             }
             @Override
             public void onFailure(Call<LoginData> call, Throwable t) {
-                loadingDots.stopAnimation();
+                loadingDots.setVisibility(View.INVISIBLE);
                 Toast.makeText(mContext,t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

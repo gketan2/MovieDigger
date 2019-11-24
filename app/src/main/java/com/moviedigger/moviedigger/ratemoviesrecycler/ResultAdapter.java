@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
 
-    private ArrayList<ResultData> dataList = new ArrayList<ResultData>();
+    private ArrayList<ResultData> dataList = new ArrayList<>();
     private Context mContext;
 
     private ArrayList<Float> userRatingList = new ArrayList<>();
@@ -48,6 +48,9 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     @Override
     public void onBindViewHolder(final ResultViewHolder viewHolder, final int position){
 
+        viewHolder.rating.setVisibility(View.INVISIBLE);
+        viewHolder.genres.setVisibility(View.INVISIBLE);
+
 
         viewHolder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -56,15 +59,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
             }
         });
 
-        String rating = dataList.get(position).getImdbRating();
         String url = dataList.get(position).getImageUrl();
-        String genres = dataList.get(position).getGenres();
+
+        //String rating = dataList.get(position).getImdbRating();
+        //String genres = dataList.get(position).getGenres();
 
         viewHolder.movie_name.setText(dataList.get(position).getMovieName());
-        if(rating != null && genres != null){
-            viewHolder.rating.setText("Rating : " +rating);
-            viewHolder.genres.setText("Genres: "+genres);
-        }
+//        if(rating != null && genres != null){
+//            viewHolder.rating.setText("Rating : " +rating);
+//            viewHolder.genres.setText("Genres: "+genres);
+//        }
         if (url != null) {
             Glide.with(mContext)
                     .load(url)

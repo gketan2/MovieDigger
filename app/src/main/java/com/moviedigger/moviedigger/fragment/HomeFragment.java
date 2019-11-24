@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.eyalbira.loadingdots.LoadingDots;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.moviedigger.moviedigger.Constants;
 import com.moviedigger.moviedigger.R;
@@ -35,6 +36,7 @@ import static com.moviedigger.moviedigger.retrofit.ApiInterface.BASE_URL;
 public class HomeFragment extends Fragment {
     RecyclerView result_view;
     FloatingActionButton fab_reload;
+    LoadingDots home_loadingdots;
 
     ArrayList<ResultData> data = new ArrayList<ResultData>();
 
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment {
 
         result_view.setLayoutManager(new LinearLayoutManager(context));
 
+        home_loadingdots = v.findViewById(R.id.home_loading_dots);
+
         retrofitCall();
 
         fab_reload = v.findViewById(R.id.fab_reload);
@@ -74,6 +78,7 @@ public class HomeFragment extends Fragment {
         fab_reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                data.clear();
                 retrofitCall();
             }
         });
@@ -98,6 +103,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void retrofitCall() {
+        home_loadingdots.setVisibility(View.VISIBLE);
         Retrofit retrofit = getClient();
         MoviesList moviesList = new MoviesList(context.getSharedPreferences("authDetails", Context.MODE_PRIVATE).getString("username",null));
         apiInterface = retrofit.create(ApiInterface.class);
@@ -124,15 +130,19 @@ public class HomeFragment extends Fragment {
                         Intent i = new Intent(context, RateMovies.class);
                         startActivity(i);
                         Toast.makeText(context,responseMessage,Toast.LENGTH_SHORT).show();
+
                     }
                 }
+                home_loadingdots.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<MoviesList> call, Throwable t) {
                 Toast.makeText(context,t.getMessage(),Toast.LENGTH_SHORT).show();
+                home_loadingdots.setVisibility(View.INVISIBLE);
             }
         });
+        home_loadingdots.setVisibility(View.INVISIBLE);
 
     }
 }

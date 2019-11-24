@@ -92,7 +92,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     private void getDataFromTmdb(final int position){
             MoviePoster moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
                 @Override
-                public void processFinish(List<String> output) {
+                public void processFinish(ArrayList<String> output) {
                     if(output != null && output.size() !=0 ){
                         dataList.get(position).setImageUrl(output.get(0));
                         dataList.get(position).setImdbRating(output.get(1));

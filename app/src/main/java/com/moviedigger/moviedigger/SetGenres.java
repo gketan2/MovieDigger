@@ -39,15 +39,18 @@ public class SetGenres extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_genres);
+//
+//        setgenres_submit = findViewById(R.id.setgenres_submit);
+//        setgenres_list = findViewById(R.id.setgenres_list);
+//
+//        GENRES = getResources().getStringArray(R.array.genres);
+//
+//        setgenres_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+//
+//        setgenres_list.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,GENRES));
 
-        setgenres_submit = findViewById(R.id.setgenres_submit);
-        setgenres_list = findViewById(R.id.setgenres_list);
-
-        GENRES = getResources().getStringArray(R.array.genres);
-
-        setgenres_list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-        setgenres_list.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,GENRES));
+        Intent i =new Intent(this,RateMovies.class);
+        startActivity(i);
 
 
     }
