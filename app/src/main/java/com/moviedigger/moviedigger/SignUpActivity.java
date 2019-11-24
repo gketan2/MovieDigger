@@ -57,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         signup_loadingdots = findViewById(R.id.signup_loadingdots);
 
+        signup_loadingdots.setVisibility(View.INVISIBLE);
+
 
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int h = dm.heightPixels;
@@ -95,6 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(signup_username.getText() == null || signup_password.getText() == null || signup_cnf_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
+            signup_loadingdots.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -102,7 +105,8 @@ public class SignUpActivity extends AppCompatActivity {
         String password = signup_password.getText().toString();
         String cnf_password = signup_cnf_password.getText().toString();
 
-        if(!checkPassword(password,cnf_password) && !checkUsername(username)){
+        if(!checkPassword(password,cnf_password) || !checkUsername(username)){
+            signup_loadingdots.setVisibility(View.INVISIBLE);
             return;
         }
         //Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
@@ -143,8 +147,8 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }else{
                     Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
-                    signup_loadingdots.setVisibility(View.INVISIBLE);
                 }
+                signup_loadingdots.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -153,7 +157,6 @@ public class SignUpActivity extends AppCompatActivity {
                 signup_loadingdots.setVisibility(View.INVISIBLE);
             }
         });
-        signup_loadingdots.setVisibility(View.INVISIBLE);
     }
 
     public Retrofit getClient() {
@@ -166,7 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
     public boolean checkUsername(String userString){
         boolean status = true;
-        if(userString.length() == 0){
+        if(userString == null || userString.length() == 0){
             Toast.makeText(this,"Please Enter Username",Toast.LENGTH_SHORT).show();
             status = false;
         }
@@ -175,10 +178,10 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean checkPassword(String passString, String cnfpassString){
         boolean status = true;
 
-        if(passString.length() == 0){
+        if(passString == null || passString.length() == 0){
             Toast.makeText(this,"Please Enter Password",Toast.LENGTH_SHORT).show();
             status = false;
-        }else if(cnfpassString.length() == 0){
+        }else if(cnfpassString == null || cnfpassString.length() == 0){
             Toast.makeText(this,"Please Confirm Password",Toast.LENGTH_SHORT).show();
             status = false;
         }else if(!passString.equals(cnfpassString)){

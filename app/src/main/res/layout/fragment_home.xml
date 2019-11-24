@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Movies for You"
+        android:padding="10sp"
         android:fontFamily="@font/ubuntu_bold_font"
         android:textSize="25sp"
         android:gravity="center"/>

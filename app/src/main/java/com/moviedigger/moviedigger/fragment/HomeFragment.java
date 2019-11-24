@@ -86,20 +86,12 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
     private Retrofit getClient() {
 
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
     }
 
     private void retrofitCall() {

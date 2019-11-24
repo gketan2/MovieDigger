@@ -50,6 +50,8 @@ public class SignInActivity extends AppCompatActivity {
         signin_icon_image = findViewById(R.id.signin_icon_image);
         loadingDots = findViewById(R.id.signin_loading_dots);
 
+        loadingDots.setVisibility(View.INVISIBLE);
+
 
 
         /////////Setting Layout
@@ -98,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
 
         if(signin_username.getText() == null || signin_password.getText() == null){
             Toast.makeText(this, "Please Enter Username and Password", Toast.LENGTH_SHORT).show();
+            loadingDots.setVisibility(View.INVISIBLE);
             return;
         }
 
@@ -105,6 +108,7 @@ public class SignInActivity extends AppCompatActivity {
         final String password = signin_password.getText().toString();
 
         if(!checkPassword(password) && !checkUsername(username)){
+            loadingDots.setVisibility(View.INVISIBLE);
             return;
         }
         //Toast.makeText(this,username+" "+password,Toast.LENGTH_SHORT).show();
@@ -132,7 +136,7 @@ public class SignInActivity extends AppCompatActivity {
                         //editor.putString("token", token);
                         editor.putString("username", user);
                         editor.apply();
-                        loadingDots.setVisibility(View.INVISIBLE);
+
 
 //                        if(profileStatus == Constants.PROFILE_COMPLETE){
 //                            Intent i = new Intent(mContext,RecommendedActivity.class);
@@ -154,18 +158,18 @@ public class SignInActivity extends AppCompatActivity {
 
                     }else if(responseCode  == Constants.USER_NOT_VERIFIED){
                         Toast.makeText(mContext, responseMessage, Toast.LENGTH_SHORT).show();
-                        loadingDots.setVisibility(View.INVISIBLE);
+
                         signin_password.setText("");
                     }else if(responseCode == Constants.USER_NOT_EXIST){
                         Toast.makeText(mContext,responseMessage,Toast.LENGTH_SHORT).show();
-                        loadingDots.setVisibility(View.INVISIBLE);
+
                         signin_username.setText("");
                         signin_password.setText("");
                     }
                 }else{
                     Toast.makeText(mContext,"Something went Wrong...",Toast.LENGTH_SHORT).show();
-                    loadingDots.setVisibility(View.INVISIBLE);
                 }
+                loadingDots.setVisibility(View.INVISIBLE);
             }
             @Override
             public void onFailure(Call<LoginData> call, Throwable t) {

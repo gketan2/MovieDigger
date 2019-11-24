@@ -28,8 +28,10 @@ public interface ApiInterface {
     @POST("get_popular_movies/")
     Call<MoviesList> getMovieList(@Body MoviesList list);
 
-
     @POST("recommend_movies_to_user/")
     Call<MoviesList> recommendedMovies(@Body MoviesList list);
+
+    @POST("get_user_movies/")
+    Call<MoviesList> history(@Body MoviesList list);
 
 }

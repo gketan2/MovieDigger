@@ -29,9 +29,9 @@ public class RecommendedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended);
 
-        home = new HomeFragment(getBaseContext());
+        home = new HomeFragment(this);
         search = new SearchFragment();
-        profile = new ProfileFragment();
+        profile = new ProfileFragment(this);
 
         fragmentTransaction(home);
 
@@ -46,7 +46,7 @@ public class RecommendedActivity extends AppCompatActivity {
                         break;
                     case R.id.search: current_frag = 1;if(search == null)search = new SearchFragment();f = search;
                         break;
-                    case R.id.profile: current_frag = 2;if(profile == null)profile = new ProfileFragment();f = profile;
+                    case R.id.profile: current_frag = 2;if(profile == null)profile = new ProfileFragment(getBaseContext());f = profile;
                         break;
                 }
                 fragmentTransaction(f);
@@ -63,7 +63,7 @@ public class RecommendedActivity extends AppCompatActivity {
 
     private void fragmentTransaction(Fragment f){
 
-        Fragment f1 = null;
+        Fragment f1;
         if (f == null)
             return;
         if(top_frag == current_frag)
