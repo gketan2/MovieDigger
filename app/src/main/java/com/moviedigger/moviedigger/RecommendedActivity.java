@@ -30,7 +30,7 @@ public class RecommendedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recommended);
 
         home = new HomeFragment(this);
-        search = new SearchFragment();
+        search = new SearchFragment(this);
         profile = new ProfileFragment(this);
 
         fragmentTransaction(home);
@@ -44,7 +44,7 @@ public class RecommendedActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.home: current_frag = 0;if(home == null)home = new HomeFragment(getBaseContext());f = home;
                         break;
-                    case R.id.search: current_frag = 1;if(search == null)search = new SearchFragment();f = search;
+                    case R.id.search: current_frag = 1;if(search == null)search = new SearchFragment(getBaseContext());f = search;
                         break;
                     case R.id.profile: current_frag = 2;if(profile == null)profile = new ProfileFragment(getBaseContext());f = profile;
                         break;

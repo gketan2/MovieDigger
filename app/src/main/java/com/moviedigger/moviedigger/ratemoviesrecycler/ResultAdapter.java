@@ -21,6 +21,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     private ArrayList<ResultData> dataList = new ArrayList<>();
     private Context mContext;
 
+    MoviePoster moviePoster;
+
     private ArrayList<Float> userRatingList = new ArrayList<>();
 
     public ResultAdapter(ArrayList<ResultData> list, Context context){
@@ -36,8 +38,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
         ResultViewHolder viewHolder = new ResultViewHolder(v);
 
 
-
-
         for(int i=0;i<dataList.size();i++)
             getDataFromTmdb(i);
 
@@ -48,9 +48,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     @Override
     public void onBindViewHolder(final ResultViewHolder viewHolder, final int position){
 
-        viewHolder.rating.setVisibility(View.INVISIBLE);
-        viewHolder.genres.setVisibility(View.INVISIBLE);
-
 
         viewHolder.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -60,15 +57,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
         });
 
         String url = dataList.get(position).getImageUrl();
-
-        //String rating = dataList.get(position).getImdbRating();
-        //String genres = dataList.get(position).getGenres();
+        String rating = dataList.get(position).getImdbRating();
+        String genres = dataList.get(position).getGenres();
 
         viewHolder.movie_name.setText(dataList.get(position).getMovieName());
-//        if(rating != null && genres != null){
-//            viewHolder.rating.setText("Rating : " +rating);
-//            viewHolder.genres.setText("Genres: "+genres);
-//        }
+        if(rating != null && genres != null){
+            viewHolder.rating.setText("IMDB Rating : " +rating);
+            viewHolder.genres.setText("Genres: "+genres);
+        }
         if (url != null) {
             Glide.with(mContext)
                     .load(url)
@@ -95,16 +91,19 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
 
 
     public void add(ArrayList<ResultData> dataList){
+        if(moviePoster != null)
+            moviePoster.cancel(true);
         this.dataList.clear();
+        notifyDataSetChanged();
         this.dataList.addAll(dataList);
         notifyDataSetChanged();
     }
 
     private void getDataFromTmdb(final int position){
-            MoviePoster moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
+            moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
                 @Override
                 public void processFinish(ArrayList<String> output) {
-                    if(output != null && output.size() !=0 ){
+                    if(output != null && output.size() !=0  && getItemCount() > position){
                         dataList.get(position).setImageUrl(output.get(0));
                         dataList.get(position).setImdbRating(output.get(1));
                         dataList.get(position).setGenres(output.get(2));
@@ -126,6 +125,13 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
         }
         return userRatingList;
 
+    }
+
+    public void clear(){
+        if(moviePoster != null)
+            moviePoster.cancel(true);
+        dataList.clear();
+        notifyDataSetChanged();
     }
 
 }

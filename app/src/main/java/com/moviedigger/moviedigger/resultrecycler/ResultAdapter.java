@@ -21,6 +21,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
     private List<ResultData> dataList = new ArrayList<ResultData>();
     private Context mContext;
 
+    MoviePoster moviePoster;
+
     public ResultAdapter(ArrayList<ResultData> list, Context context){
         dataList.clear();
         dataList.addAll(list);
@@ -84,16 +86,20 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
 
 
     public void add(ArrayList<ResultData> dataList){
+        if(moviePoster != null)
+            moviePoster.cancel(true);
         this.dataList.clear();
+        notifyDataSetChanged();
         this.dataList.addAll(dataList);
         notifyDataSetChanged();
+
     }
 
     private void getDataFromTmdb(final int position){
-            MoviePoster moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
+            moviePoster = new MoviePoster(dataList.get(position).getMovieId(), new TmdbResponse() {
                 @Override
                 public void processFinish(ArrayList<String> output) {
-                    if(output != null && output.size() !=0 ){
+                    if(output != null && output.size() !=0   && getItemCount() > position){
                         dataList.get(position).setImageUrl(output.get(0));
                         dataList.get(position).setImdbRating(output.get(1));
                         dataList.get(position).setGenres(output.get(2));
@@ -104,6 +110,14 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultViewHolder> {
                 }
             });
             moviePoster.execute();
+
+    }
+
+    public void clear(){
+        if(moviePoster != null)
+            moviePoster.cancel(true);
+        dataList.clear();
+        notifyDataSetChanged();
     }
 
 }

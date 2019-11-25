@@ -5,7 +5,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
-    String BASE_URL = "http://192.168.100.6:5000/";
+    String BASE_URL = "http://192.168.100.10:5000/";
 
     @POST("verify/")
     Call<LoginData> signin(@Body LoginData signin);
@@ -33,5 +33,6 @@ public interface ApiInterface {
 
     @POST("get_user_movies/")
     Call<MoviesList> history(@Body MoviesList list);
+
 
 }

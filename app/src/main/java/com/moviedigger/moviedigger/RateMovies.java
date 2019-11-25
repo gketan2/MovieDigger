@@ -98,7 +98,7 @@ public class RateMovies extends AppCompatActivity {
         final Context context = this;
         Retrofit retrofit = getClient();
         MoviesList moviesList = new MoviesList(context.getSharedPreferences("authDetails", Context.MODE_PRIVATE).getString("username",null));
-        //moviesList.setGenre("Action");
+
         moviesList.setNum_movies(15);
         apiInterface = retrofit.create(ApiInterface.class);
         Call<MoviesList> call = apiInterface.getMovieList(moviesList);

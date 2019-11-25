@@ -134,7 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
                         //editor.putString("token", token);
                         editor.putString("username", user);
                         editor.apply();
-                        Intent i = new Intent(mContext, SetGenres.class);
+                        Intent i = new Intent(mContext, RateMovies.class);
                         startActivity(i);
                         finish();
 

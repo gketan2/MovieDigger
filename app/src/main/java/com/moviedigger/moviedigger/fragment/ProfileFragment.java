@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -37,12 +38,14 @@ public class ProfileFragment extends Fragment {
 
     Button b;
     RecyclerView profile_recycler;
+    TextView profile_username;
 
     ResultAdapter resultAdapter;
     ApiInterface apiInterface;
 
     Context context;
     private ArrayList<ResultData> data = new ArrayList<>();
+    String username;
 
     public ProfileFragment(Context context) {
         this.context = context;
@@ -54,12 +57,18 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SharedPreferences sp = context.getSharedPreferences("authDetails",Context.MODE_PRIVATE);
+        username = sp.getString("username","Not Signed In");
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_profile, container, false);
+
+        profile_username = v.findViewById(R.id.profile_username);
+        profile_username.setText(username);
 
         b = v.findViewById(R.id.profile_signout);
         profile_recycler = v.findViewById(R.id.profile_recycler);

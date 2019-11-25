@@ -20,7 +20,12 @@ public class MoviesList {
     private int num_movies;
     @SerializedName("genre")
     private String genre;
+    @SerializedName("query")
+    private String query;
+    @SerializedName("ratings")
+    private ArrayList<Float> userRatings;
 
+    public MoviesList(){}
     public MoviesList(String username) {
         this.username = username;
     }
@@ -39,11 +44,17 @@ public class MoviesList {
     public ArrayList<Integer> getMovieId() {
         return movieId;
     }
+    public ArrayList<Float> getUserRatings(){
+        return userRatings;
+    }
 
     public void setNum_movies(int num_movies) {
         this.num_movies = num_movies;
     }
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+    public void setQuery(String query){
+        this.query = query;
     }
 }

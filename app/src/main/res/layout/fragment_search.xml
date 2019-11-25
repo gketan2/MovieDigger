@@ -17,23 +17,28 @@
         android:gravity="center"
         android:layout_marginBottom="5dp"/>
     <RelativeLayout
+        android:id="@+id/search_head2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/head"
         android:layout_margin="5dp"
         >
         <EditText
-            android:id="@+id/search_movie_name"
+            android:id="@+id/search_moviename"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Movie Name (Optional)"
             android:fontFamily="@font/ubuntu_font"
+            android:layout_toStartOf="@+id/button"
+            android:layout_marginEnd="20sp"
             />
         <com.pchmn.materialchips.ChipsInput
             android:id="@+id/chips_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/search_movie_name"
+            android:layout_below="@+id/search_moviename"
+            android:layout_toStartOf="@+id/button"
+            android:layout_marginEnd="20sp"
             app:hint="Genres(Optional)"
             app:chip_hasAvatarIcon="false"
             app:chip_deletable="true"
@@ -44,19 +49,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Search"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/chips_input"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/curved_button"
             android:fontFamily="@font/ubuntu_bold_font"
             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+
+        <Button
+            android:id="@+id/search_submitrateing"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Submit Rating"
+            android:background="@drawable/gradient"
             android:layout_below="@+id/button"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
             />
 
     </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_head2"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        />
+
+    <com.eyalbira.loadingdots.LoadingDots
+        android:id="@+id/search_loadingdots"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+
+        app:LoadingDots_auto_play="true"
+
+        app:LoadingDots_dots_color="#3480FF"
+        app:LoadingDots_dots_count="4"
+        app:LoadingDots_dots_size="10dp"
+        app:LoadingDots_dots_space="8dp"
+
+        app:LoadingDots_loop_duration="800"
+        app:LoadingDots_loop_start_delay="50"
+
+        app:LoadingDots_jump_duration="500"
+        app:LoadingDots_jump_height="10dp"
+        />
+
 
 </RelativeLayout>

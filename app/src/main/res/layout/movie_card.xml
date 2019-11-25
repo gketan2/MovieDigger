@@ -55,6 +55,18 @@
             android:fontFamily="@font/ubuntu_font"
             android:textColor="#000000"
             />
+        <TextView
+            android:id="@+id/user_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="User Rating"
+            android:layout_toEndOf="@+id/movie_image"
+            android:layout_below="@+id/genres"
+            android:textSize="15sp"
+            android:fontFamily="@font/ubuntu_font"
+            android:textColor="#000000"
+            android:visibility="invisible"
+            />
         <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/movie_rating"
             android:layout_width="wrap_content"
